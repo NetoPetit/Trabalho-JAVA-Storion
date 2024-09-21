@@ -49,7 +49,7 @@ public class Cliente extends Pessoa {
         }
     }
 
-    //***PRECISA TERMINAR DE PROGRAMAR AS OPÇÕES-SÓ FOI FEITO A [1]***
+    //***PRECISA TERMINAR -  OPÇÃO [3] ESTÁ FALTANDO***
     //TALVEZ ESSE MÉTODO VÁ PARA OUTRA CLASSE SE NECESSÁRIO
     public void comecar() {
         System.out.println("===========================================");
@@ -59,7 +59,7 @@ public class Cliente extends Pessoa {
                 + "\n========MENU========\n"
                 + "[1] Consultar saldo\n"
                 + "[2] Fazer depósito\n"
-                + "[3] Comprar\n"//FALTA FAZER ESSA OPÇÃO
+                + "[3] Comprar\n"//FALTA FAZER ESTA OPÇÃO
                 + "[4] Ver cadastro\n"
                 + "[5] Encerrar");
         int opcaoMenu = entrada.nextInt();
@@ -75,25 +75,20 @@ public class Cliente extends Pessoa {
             status();
 
             System.out.println("O que deseja fazer:\n"
-                    + "[1] Editar Cadastro\n"//**TIRAR?**
+                    + "[1] Editar Cadastro\n"
                     + "[2] Voltar\n"
                     + "[3] Encerrar");
             int opcaoQuatroMenu = entrada.nextInt();
+            System.out.println("\n");
 
-            while (opcaoQuatroMenu == 1){
+            if (opcaoQuatroMenu == 1) {
                 cadastrar();
                 status();
-            }
-            /*if (opcaoQuatroMenu == 1) {
-                cadastrar();
-                status();
+                System.out.println("Cadastro atualizado com sucesso!"
+                        + " Retornando ao Menu Principal\n");
 
-                System.out.println("O que deseja fazer:\n"
-                        + "[1] Editar Cadastro\n"
-                        + "[2] Voltar\n"
-                        + "[3] Encerrar");
-                opcaoQuatroMenu = entrada.nextInt();
-            } else */if (opcaoQuatroMenu == 2) {
+                comecar();
+            } else if (opcaoQuatroMenu == 2) {
                 comecar();
             } else if (opcaoQuatroMenu == 3){
                 System.out.println("Encerrando o programa...");
@@ -115,9 +110,12 @@ public class Cliente extends Pessoa {
                 }
             }
 
-        } else {
+        } else if (opcaoMenu == 5){
             System.out.println("Encerrando o programa...");
             System.exit(0);
+        } else {
+            System.out.println("Opção inválida! Escolha uma opção válida.");
+            comecar();
         }
 
     }
@@ -147,8 +145,6 @@ public class Cliente extends Pessoa {
         }
     }
 
-    ;
-
     public void fazerDeposito() {
         System.out.println("Qual o valor do depósito?");
         float valor = entrada.nextFloat();
@@ -172,9 +168,12 @@ public class Cliente extends Pessoa {
         }
     }
     public void status(){
+        System.out.println("=======================");
+        System.out.println("|| DADOS DO CADASTRO ||");
+        System.out.println("=======================\n");
         System.out.println("Nome: " + getNome() +"\n"
-        + "Idade: " + getIdade() + "\n"
-        + "Sexo: " + getSexo() + "\n");
+            + "Idade: " + getIdade() + "\n"
+            + "Sexo: " + getSexo() + "\n");
     }
 
     public float getSaldo() {
