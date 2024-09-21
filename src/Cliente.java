@@ -28,7 +28,7 @@ public class Cliente extends Pessoa {
         if (getIdade() == null || getIdade() < 0) {
             while (getIdade() == null || getIdade() < 0) {
                 System.out.println("Idade inválida! Digite uma idade válida.\n"
-                + "Qual sua idade?");
+                        + "Qual sua idade?");
                 setIdade(entrada.nextInt());
             }
         }
@@ -49,7 +49,9 @@ public class Cliente extends Pessoa {
         }
     }
 
-    public void comecar(){
+    //***PRECISA TERMINAR DE PROGRAMAR AS OPÇÕES-SÓ FOI FEITO A [1]***
+    //TALVEZ ESSE MÉTODO VÁ PARA OUTRA CLASSE SE NECESSÁRIO
+    public void comecar() {
         System.out.println("===========================================");
         System.out.println(" Seja bem vindo(a) " + getNome() + " !!! ");
         System.out.println("===========================================");
@@ -57,67 +59,146 @@ public class Cliente extends Pessoa {
                 + "\n========MENU========\n"
                 + "[1] Consultar saldo\n"
                 + "[2] Fazer depósito\n"
-                + "[3] Comprar\n"
+                + "[3] Comprar\n"//FALTA FAZER ESSA OPÇÃO
                 + "[4] Ver cadastro\n"
                 + "[5] Encerrar");
         int opcaoMenu = entrada.nextInt();
         System.out.println("\n");
 
-        if(opcaoMenu == 1){
+        if (opcaoMenu == 1) {
             consultarSaldo();
+        } else if (opcaoMenu == 2) {
+            fazerDeposito();
+        } else if (opcaoMenu == 3) {
+            //A DEFINIR
+        } else if (opcaoMenu == 4) {
+            status();
+
+            System.out.println("O que deseja fazer:\n"
+                    + "[1] Editar Cadastro\n"//**TIRAR?**
+                    + "[2] Voltar\n"
+                    + "[3] Encerrar");
+            int opcaoQuatroMenu = entrada.nextInt();
+
+            while (opcaoQuatroMenu == 1){
+                cadastrar();
+                status();
+            }
+            /*if (opcaoQuatroMenu == 1) {
+                cadastrar();
+                status();
+
+                System.out.println("O que deseja fazer:\n"
+                        + "[1] Editar Cadastro\n"
+                        + "[2] Voltar\n"
+                        + "[3] Encerrar");
+                opcaoQuatroMenu = entrada.nextInt();
+            } else */if (opcaoQuatroMenu == 2) {
+                comecar();
+            } else if (opcaoQuatroMenu == 3){
+                System.out.println("Encerrando o programa...");
+                System.exit(0);
+            } else {
+                while (opcaoQuatroMenu < 1 || opcaoQuatroMenu > 2) {
+                    System.out.println("Opção inválida. Escolha uma opção válida:\n"
+                            + "[1] Voltar\n"
+                            + "[2] Encerrar");
+                    opcaoQuatroMenu = entrada.nextInt();
+
+                    if (opcaoQuatroMenu == 1) {
+                        comecar();
+                    }
+                    if (opcaoQuatroMenu == 2) {
+                        System.out.println("Encerrando o programa...");
+                        System.exit(0);
+                    }
+                }
+            }
+
+        } else {
+            System.out.println("Encerrando o programa...");
+            System.exit(0);
         }
 
     }
-    public void consultarSaldo(){
+
+    public void consultarSaldo() {
         System.out.println(this.getNome() + " seu saldo é R$ " + this.getSaldo()
-        + "\nO que deseja fazer:\n"
-        + "[1] Nova consulta\n"
-        + "[2] Fazer depósito\n"
-        + "[3] Retornar ao Menu Principal\n"
-        + "[4] Sair");
+                + "\nO que deseja fazer:\n"
+                + "[1] Nova consulta\n"
+                + "[2] Fazer depósito\n"
+                + "[3] Retornar ao Menu Principal\n"
+                + "[4] Sair");
         int opcaoCosultarSaldo = entrada.nextInt();
         System.out.println("\n");
 
-        if(opcaoCosultarSaldo == 1){
+        if (opcaoCosultarSaldo == 1) {
             consultarSaldo();
-        }else if(opcaoCosultarSaldo == 2){
+        } else if (opcaoCosultarSaldo == 2) {
             fazerDeposito();
-        }else if(opcaoCosultarSaldo == 3){
+        } else if (opcaoCosultarSaldo == 3) {
             comecar();
-        }else if (opcaoCosultarSaldo == 4){
+        } else if (opcaoCosultarSaldo == 4) {
             System.out.println("Encerrando o programa...");
             System.exit(0);
-        }else {
+        } else {
             System.out.println("Opção inválida. Escolha uma opção válida:\n");
             consultarSaldo();
         }
-    };
-    public void fazerDeposito(){
-        System.out.println("Qual o valor do depósito?\n");
+    }
+
+    ;
+
+    public void fazerDeposito() {
+        System.out.println("Qual o valor do depósito?");
         float valor = entrada.nextFloat();
         this.setSaldo(this.getSaldo() + valor);
+
         System.out.println("Seu saldo atual é R$ " + this.getSaldo() + "\n\n"
-        + "O que deseja fazer:\n\n"
-        + "[1] Novo depósito\n"
-        + "[2] Retornar ao Menu Principal"
-        + "[3] Encerrar");
-    };
-    public float getSaldo(){
+                + "O que deseja fazer:\n\n"
+                + "[1] Novo depósito\n"
+                + "[2] Retornar ao Menu Principal\n"
+                + "[3] Encerrar");
+        int opcaoDeposito = entrada.nextInt();
+        System.out.println("\n");
+
+        if (opcaoDeposito == 1) {
+            fazerDeposito();
+        } else if (opcaoDeposito == 2) {
+            comecar();
+        } else if (opcaoDeposito == 3) {
+            System.out.println("Encerrando o programa...");
+            System.exit(0);
+        }
+    }
+    public void status(){
+        System.out.println("Nome: " + getNome() +"\n"
+        + "Idade: " + getIdade() + "\n"
+        + "Sexo: " + getSexo() + "\n");
+    }
+
+    public float getSaldo() {
         return this.saldo;
     }
-    public void setSaldo(float saldo){
+
+    public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
-    public float getDeposito(){
+
+    public float getDeposito() {
         return this.deposito;
     }
-    public void setDeposito(float deposito){
+
+    public void setDeposito(float deposito) {
         this.deposito = deposito;
     }
-    public boolean getComprar(){
+
+    public boolean getComprar() {
         return this.comprar;
     }
-    public void setComprar(boolean comprar){
+
+    public void setComprar(boolean comprar) {
         this.comprar = comprar;
     }
+
 }
