@@ -14,17 +14,21 @@ public class Cliente extends Pessoa {
 
         System.out.println("\nQual seu nome?");
         setNome(entrada.nextLine());
-        if (getNome().equals("")) {
 
-            while (getNome().equals("")) {
-                System.out.println("Nome inválido! Digite um nome válido.\n"
-                        + "Qual seu nome?");
+        if (getNome().isEmpty()) {
+
+            while (getNome().isEmpty()) {
+                System.out.println("Nome inválido! Digite um nome válido.");
+                System.out.println("\n");
+                System.out.println("Qual seu nome?");
                 setNome(entrada.nextLine());
             }
         }
         //**PRECISA ARRUMAR-Em caso de resposta nula, está pulando linha ao invés de recomeçar**//
+        //**PRECISA ARRUMAR-Em caso de reposta igual a zero ou menor, está aceitando o valor**//
         System.out.println("Qual sua idade?");
         setIdade(entrada.nextInt());
+
         if (getIdade() == null || getIdade() < 0) {
             while (getIdade() == null || getIdade() < 0) {
                 System.out.println("Idade inválida! Digite uma idade válida.\n"
@@ -38,11 +42,12 @@ public class Cliente extends Pessoa {
         setSexo(entrada.nextLine());
         System.out.println("\n");
 
-        if (getSexo().equals("")) {
+        if (getSexo().isEmpty()) {
 
-            while (getSexo().equals("")) {
-                System.out.println("Sexo inválido! Digite um sexo válido.\n"
-                        + "Qual seu sexo?");
+            while (getSexo().isEmpty()) {
+                System.out.println("Sexo inválido! Digite um sexo válido.");
+                System.out.println("\n");
+                System.out.println("Qual seu sexo?");
                 setSexo(entrada.nextLine());
                 System.out.println("\n");
             }
@@ -53,7 +58,7 @@ public class Cliente extends Pessoa {
     //TALVEZ ESSE MÉTODO VÁ PARA OUTRA CLASSE SE NECESSÁRIO
     public void comecar() {
         System.out.println("===========================================");
-        System.out.println(" Seja bem vindo(a) " + getNome() + " !!! ");
+        System.out.println(" SEJA BEM VINDO(A) " + getNome() + " !!! ");
         System.out.println("===========================================");
         System.out.println("\nPor onde deseja começar?\n"
                 + "\n========MENU========\n"
@@ -75,7 +80,7 @@ public class Cliente extends Pessoa {
             status();
 
             System.out.println("O que deseja fazer:\n"
-                    + "[1] Editar Cadastro\n"
+                    + "[1] Atualizar Cadastro\n"
                     + "[2] Voltar\n"
                     + "[3] Encerrar");
             int opcaoQuatroMenu = entrada.nextInt();
@@ -86,7 +91,6 @@ public class Cliente extends Pessoa {
                 status();
                 System.out.println("Cadastro atualizado com sucesso!"
                         + " Retornando ao Menu Principal\n");
-
                 comecar();
             } else if (opcaoQuatroMenu == 2) {
                 comecar();
@@ -94,16 +98,27 @@ public class Cliente extends Pessoa {
                 System.out.println("Encerrando o programa...");
                 System.exit(0);
             } else {
-                while (opcaoQuatroMenu < 1 || opcaoQuatroMenu > 2) {
-                    System.out.println("Opção inválida. Escolha uma opção válida:\n"
-                            + "[1] Voltar\n"
-                            + "[2] Encerrar");
+                while (opcaoQuatroMenu < 1 || opcaoQuatroMenu > 3) {
+                    System.out.println("Opção inválida. Escolha uma opção válida!");
+                    System.out.println("\n");
+                    System.out.println("O que deseja fazer:\n"
+                            + "[1] Atualizar cadastro\n"
+                            + "[2] Voltar\n"
+                            + "[3] Encerrar");
                     opcaoQuatroMenu = entrada.nextInt();
+                    System.out.println("\n");
 
                     if (opcaoQuatroMenu == 1) {
+                        cadastrar();
+                        status();
+                        System.out.println("Cadastro atualizado com sucesso!"
+                                + " Retornando ao Menu Principal\n");
                         comecar();
                     }
                     if (opcaoQuatroMenu == 2) {
+                        comecar();
+                    }
+                    if (opcaoQuatroMenu == 3){
                         System.out.println("Encerrando o programa...");
                         System.exit(0);
                     }
@@ -114,14 +129,17 @@ public class Cliente extends Pessoa {
             System.out.println("Encerrando o programa...");
             System.exit(0);
         } else {
-            System.out.println("Opção inválida! Escolha uma opção válida.");
+            System.out.println("Opção inválida! Escolha uma opção válida.\n");
             comecar();
         }
 
     }
 
     public void consultarSaldo() {
-        System.out.println(this.getNome() + " seu saldo é R$ " + this.getSaldo()
+        System.out.println("=========");
+        System.out.println("||SALDO||");
+        System.out.println("=========");
+        System.out.println("\n" + this.getNome() + " seu saldo é R$ " + this.getSaldo()
                 + "\nO que deseja fazer:\n"
                 + "[1] Nova consulta\n"
                 + "[2] Fazer depósito\n"
@@ -146,9 +164,16 @@ public class Cliente extends Pessoa {
     }
 
     public void fazerDeposito() {
-        System.out.println("Qual o valor do depósito?");
+        System.out.println("============");
+        System.out.println("||DEPÓSITO||");
+        System.out.println("============");
+        System.out.println("\nQual o valor do depósito?");
         float valor = entrada.nextFloat();
         this.setSaldo(this.getSaldo() + valor);
+        menuDeposito();
+    }
+
+    public void menuDeposito(){
 
         System.out.println("Seu saldo atual é R$ " + this.getSaldo() + "\n\n"
                 + "O que deseja fazer:\n\n"
@@ -165,6 +190,9 @@ public class Cliente extends Pessoa {
         } else if (opcaoDeposito == 3) {
             System.out.println("Encerrando o programa...");
             System.exit(0);
+        } else {
+            System.out.println("Opção inválida. Escolha uma opção válida:\n");
+            menuDeposito();
         }
     }
     public void status(){
