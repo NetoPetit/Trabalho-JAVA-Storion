@@ -22,8 +22,7 @@ public class Comprar extends Cliente{
                 setNome(entrada.nextLine());
             }
         }
-        //**PRECISA ARRUMAR-Em caso de resposta nula, está pulando linha ao invés de recomeçar**//
-        //**PRECISA ARRUMAR-Em caso de reposta igual a zero ou menor, está aceitando o valor**//
+
         System.out.println("Qual sua idade?");
         setIdade(entrada.nextInt());
         System.out.println("\n");
@@ -46,7 +45,7 @@ public class Comprar extends Cliente{
                 + "\n========MENU========\n"
                 + "[1] Consultar saldo\n"
                 + "[2] Fazer depósito\n"
-                + "[3] Comprar\n"//FALTA FAZER ESTA OPÇÃO
+                + "[3] Comprar\n"
                 + "[4] Ver cadastro\n"
                 + "[5] Encerrar");
         int opcaoMenu = entrada.nextInt();
@@ -57,16 +56,7 @@ public class Comprar extends Cliente{
         } else if (opcaoMenu == 2) {
             fazerDeposito();
         } else if (opcaoMenu == 3) {
-            menus.menuProdutos();
-            int subMenuTres = entrada.nextInt();
-
-            if (subMenuTres == 1){
-                comprarBebida();
-            } else if (subMenuTres == 2){
-                comprarComida();
-            } else if (subMenuTres == 3) {
-                comprarHigienie();
-            }
+            comprarProduto();
         } else if (opcaoMenu == 4) {
             status();
 
@@ -127,15 +117,17 @@ public class Comprar extends Cliente{
     }
 
     public void comprarBebida(){
+        System.out.println("\nVocê tem R$" + getSaldo() + "\n");
         menus.menuBebida();
         int opcaoMenuBebida = entrada.nextInt();
 
         if (opcaoMenuBebida == 1) {
+
             float valorProduto = 10.5f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Refrigerante"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Refrigerante.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outra bebida\n"
                         + "[2] Comprar outro produto\n"
@@ -147,14 +139,43 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoBebida == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            }else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                + "[1] Fazer depósito\n"
+                + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuBebida == 2){
             float valorProduto = 7.8f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Suco"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Suco.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outra bebida\n"
                         + "[2] Comprar outro produto\n"
@@ -166,27 +187,145 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoBebida == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            }else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuBebida == 3){
-            float valorProduto = 14.5f;
-            if (valorProduto <= getSaldo()) {
-                setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Cerveja"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
-                System.out.println("O que deseja fazer?\n"
-                        + "[1] Comprar outra bebida\n"
-                        + "[2] Comprar outro produto\n"
-                        + "[3] Voltar ao Menu Principal");
-                int segundaOpcaoBebida = entrada.nextInt();
-                if (segundaOpcaoBebida == 1) {
-                    comprarBebida();
-                } else if (segundaOpcaoBebida == 2) {
-                    comprarProduto();
-                }else if (segundaOpcaoBebida == 3){
+            if (getIdade() < 18){
+                System.out.println("\n" + getNome() + " você tem " + getIdade()
+                        + " anos. Você é menor de idade!\n");
+                System.out.println("=================================================================");
+                System.out.println("||          *******Lei federal 13.106/16*******                ||");
+                System.out.println("||PROIBIDA A VENDA DE BEBIDAS ALCOÓLICAS PARA MENORES DE IDADE!||");
+                System.out.println("||          **********VENDA CANCELADA**********                ||");
+                System.out.println("=================================================================");
+                System.out.println("\nO que deseja fazer:\n"
+                + "[1] Atualizar cadastro\n"
+                + "[2] Comprar outro produto\n"
+                + "[3] Voltar ao Menu Principal\n"
+                + "[4] Sair");
+                int opcaoMenuCerveja = entrada.nextInt();
+
+                if (opcaoMenuCerveja == 1){
+                    cadastrar();
+                    status();
+                    System.out.println("Cadastro atualizado com sucesso!"
+                            + " Retornando ao Menu Principal\n");
                     comecar();
+                } else if (opcaoMenuCerveja == 2){
+                    comprarProduto();
+                } else if (opcaoMenuCerveja == 3){
+                    comecar();
+                } else if (opcaoMenuCerveja == 4){
+                    System.out.println("Encerrando o programa...");
+                    System.exit(0);
+                } else {
+                    while (opcaoMenuCerveja < 1 || opcaoMenuCerveja > 4) {
+                        System.out.println("Opção inválida! Escolha uma opção:\n\n");
+                        System.out.println("O que deseja fazer:\n"
+                                + "[1] Atualizar cadastro\n"
+                                + "[2] Comprar outro produto\n"
+                                + "[3] Voltar ao Menu Principal\n"
+                                + "[4] Sair");
+                        opcaoMenuCerveja = entrada.nextInt();
+
+                        if (opcaoMenuCerveja == 1) {
+                            cadastrar();
+                            status();
+                            System.out.println("Cadastro atualizado com sucesso!"
+                                    + " Retornando ao Menu Principal\n");
+                            comecar();
+                        } else if (opcaoMenuCerveja == 2) {
+                            comprarProduto();
+                        } else if (opcaoMenuCerveja == 3){
+                            comecar();
+                        } else if (opcaoMenuCerveja == 4){
+                            System.out.println("Encerrando o programa...");
+                            System.exit(0);
+                        }
+                    }
+                }
+
+            } else {
+                float valorProduto = 14.5f;
+                if (valorProduto <= getSaldo()) {
+                    setSaldo(getSaldo() - valorProduto);
+                    System.out.println("\nVoce comprou o produto Cerveja.\n"
+                            + "Seu saldo atual é R$" + getSaldo() + "\n");
+                    System.out.println("O que deseja fazer?\n"
+                            + "[1] Comprar outra bebida\n"
+                            + "[2] Comprar outro produto\n"
+                            + "[3] Voltar ao Menu Principal");
+                    int segundaOpcaoBebida = entrada.nextInt();
+                    if (segundaOpcaoBebida == 1) {
+                        comprarBebida();
+                    } else if (segundaOpcaoBebida == 2) {
+                        comprarProduto();
+                    }else if (segundaOpcaoBebida == 3){
+                        comecar();
+                    } else {
+                        System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                        comprarProduto();
+                    }
+                } else {
+                    System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                            + "[1] Fazer depósito\n"
+                            + "[2] Menu Principal");
+                    int opcaoFinal = entrada.nextInt();
+
+                    if (opcaoFinal == 1){
+                        fazerDeposito();
+                        menuDeposito();
+                    } else if (opcaoFinal == 2){
+                        comecar();
+                    } else {
+                        while (opcaoFinal < 1 || opcaoFinal > 2) {
+                            System.out.println("Opção inválida! Escolha uma opção\n\n");
+                            System.out.println("[1] Fazer depósito\n"
+                                    + "[2] Menu Principal");
+                            opcaoFinal = entrada.nextInt();
+
+                            if (opcaoFinal == 1) {
+                                fazerDeposito();
+                                menuDeposito();
+                            } else if (opcaoFinal == 2) {
+                                comecar();
+                            }
+                        }
+                    }
                 }
             }
+        } else {
+            System.out.println("Opção inválida! Escolha uma opção: \n");
+            comprarBebida();
         }
     }
 
@@ -198,8 +337,8 @@ public class Comprar extends Cliente{
             float valorProduto = 8f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Salgado"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Salgado.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outra comida\n"
                         + "[2] Comprar outro produto\n"
@@ -211,14 +350,43 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoComida == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuComida == 2){
             float valorProduto = 12.8f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Pastel"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Pastel.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outra comida\n"
                         + "[2] Comprar outro produto\n"
@@ -230,14 +398,43 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoComida == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuComida == 3){
             float valorProduto = 17.9f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Salada"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Salada.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outra comida\n"
                         + "[2] Comprar outro produto\n"
@@ -249,8 +446,40 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoComida == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
+        } else {
+            System.out.println("Opção inválida! Escolha uma opção: \n");
+            comprarComida();
         }
     }
 
@@ -262,8 +491,8 @@ public class Comprar extends Cliente{
             float valorProduto = 19.9f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Shampoo"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Shampoo.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outro produto de higiene\n"
                         + "[2] Comprar outro produto\n"
@@ -275,14 +504,43 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoHigiene == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuHigiene == 2) {
             float valorProduto = 2.35f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Sabonete"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Sabonete.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outro produto de higiene\n"
                         + "[2] Comprar outro produto\n"
@@ -294,14 +552,43 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoHigiene == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
         } else if (opcaoMenuHigiene == 3) {
             float valorProduto = 13.4f;
             if (valorProduto <= getSaldo()) {
                 setSaldo(getSaldo() - valorProduto);
-                System.out.println("\nVoce adicionou o produto Desodorante"
-                        + " no seu carrinho.\n" + "Seu saldo atual é R$" + getSaldo() + "\n");
+                System.out.println("\nVoce comprou o produto Desodorante.\n"
+                        + "Seu saldo atual é R$" + getSaldo() + "\n");
                 System.out.println("O que deseja fazer?\n"
                         + "[1] Comprar outro produto de higiene\n"
                         + "[2] Comprar outro produto\n"
@@ -313,8 +600,40 @@ public class Comprar extends Cliente{
                     comprarProduto();
                 }else if (segundaOpcaoHigiene == 3){
                     comecar();
+                } else {
+                    System.out.println("Opção inválida. Voltando ao Menu dos Produtos!");
+                    comprarProduto();
+                }
+            } else {
+                System.out.println("Saldo insuficiente! Escolha uma opção:\n\n"
+                        + "[1] Fazer depósito\n"
+                        + "[2] Menu Principal");
+                int opcaoFinal = entrada.nextInt();
+
+                if (opcaoFinal == 1){
+                    fazerDeposito();
+                    menuDeposito();
+                } else if (opcaoFinal == 2){
+                    comecar();
+                } else {
+                    while (opcaoFinal < 1 || opcaoFinal > 2) {
+                        System.out.println("Opção inválida! Escolha uma opção\n\n");
+                        System.out.println("[1] Fazer depósito\n"
+                                + "[2] Menu Principal");
+                        opcaoFinal = entrada.nextInt();
+
+                        if (opcaoFinal == 1) {
+                            fazerDeposito();
+                            menuDeposito();
+                        } else if (opcaoFinal == 2) {
+                            comecar();
+                        }
+                    }
                 }
             }
+        } else {
+            System.out.println("Opção inválida! Escolha uma opção: \n");
+            comprarHigienie();
         }
 
     }
@@ -328,6 +647,9 @@ public class Comprar extends Cliente{
             comprarComida();
         } else if  (opcaoMenuProdutos == 3){
             comprarHigienie();
+        } else {
+            System.out.println("Opção inválida. Escolha uma opção válida:\n");
+            comprarProduto();
         }
     }
 
@@ -398,4 +720,5 @@ public class Comprar extends Cliente{
         System.out.println("Nome: " + getNome() +"\n"
                 + "Idade: " + getIdade() + "\n");
     }
+
 }

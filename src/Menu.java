@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Menu extends Produto {
+public class Menu {
 
     public void menuProdutos() {
         System.out.println("===========");
